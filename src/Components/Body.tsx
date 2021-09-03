@@ -32,14 +32,23 @@ const Body = () => {
 
   const retrievePersonalityData = () => {
     setIsRetreiving(true);
-    fetch(`http://192.168.43.72:8000/users/mbti/?format=json&id=${username}`)
+    fetch(
+      `http://192.168.43.72:8000/users/mbti/?format=json&id=${username}` +
+        `${movieId ? `&movie_id=${movieId}` : ""}`
+    )
       .then((r) => {
         return r.json();
       })
       .then((r) => {
         if (r.mbti !== undefined) {
           setPersonality(r);
-          history.push(`/users/${username}`);
+          history.push({
+            pathname: `/users/${username}`,
+            search:
+              movieId !== undefined && movieId !== ""
+                ? `?movie_id=${movieId}`
+                : "",
+          });
         } else if (r.error !== undefined) {
           toast({
             position: "bottom-left",
