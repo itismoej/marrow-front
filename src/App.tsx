@@ -1,25 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ChakraProvider } from "@chakra-ui/react";
+import * as React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import "./App.css";
+import { Footer } from "./Components/Footer";
+import { Header } from "./Components/Header";
+import { MainPage } from "./Components/Main";
+import { PersonalityPage } from "./Components/PersonalityData";
+import { Personality, PersonalityContext } from "./Modules/personality";
 
 function App() {
+  const [personality, setPersonality] = React.useState<Personality>({
+    mbti: "",
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <ChakraProvider>
+        <div>
+          <Header />
+          <PersonalityContext.Provider value={{ personality, setPersonality }}>
+            <Switch>
+              <Route exact path="/users/:username">
+                <PersonalityPage />
+              </Route>
+              <Route path="/">
+                <MainPage />
+              </Route>
+            </Switch>
+          </PersonalityContext.Provider>
+          <Footer />
+        </div>
+      </ChakraProvider>
+    </Router>
   );
 }
 
