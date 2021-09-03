@@ -1,11 +1,11 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider } from "@chakra-ui/react";
 import * as React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import { Footer } from "./Components/Footer";
 import { Header } from "./Components/Header";
 import { MainPage } from "./Components/Main";
-import { PersonalityPage } from "./Components/PersonalityData";
+import { PersonalityPage } from "./Components/PersonalityPage";
 import { Personality, PersonalityContext } from "./Modules/personality";
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
   return (
     <Router>
       <ChakraProvider>
-        <div>
+        <Box bg="#111" h="100vh">
           <Header />
           <PersonalityContext.Provider value={{ personality, setPersonality }}>
             <Switch>
@@ -29,7 +29,7 @@ function App() {
             </Switch>
           </PersonalityContext.Provider>
           <Footer />
-        </div>
+        </Box>
       </ChakraProvider>
     </Router>
   );

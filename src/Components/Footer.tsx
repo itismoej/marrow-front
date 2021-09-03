@@ -1,11 +1,16 @@
-import { SimpleGrid, Box } from "@chakra-ui/react";
+import { Box, SimpleGrid } from "@chakra-ui/react";
 
 const Footer = () => {
   return (
-    <SimpleGrid padding="5rem" h="30vh" bg="#171923" columns={3} spacing={10}>
-      <Box bg="#285E61" height="120px"></Box>
-      <Box bg="#285E61" height="120px"></Box>
-      <Box bg="#285E61" height="120px"></Box>
+    <SimpleGrid padding="2rem 8rem" bg="#111" columns={4} spacing={10}>
+      <Box bg="#181818" height="40px"></Box>
+      <Box bg="#181818" height="40px"></Box>
+      <Box bg="#181818" height="40px"></Box>
+      <Box bg="#181818" height="40px"></Box>
+      <Box bg="#181818" height="40px"></Box>
+      <Box bg="#181818" height="40px"></Box>
+      <Box bg="#181818" height="40px"></Box>
+      <Box bg="#181818" height="40px"></Box>
     </SimpleGrid>
   );
 };

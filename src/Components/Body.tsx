@@ -1,11 +1,15 @@
-import { ArrowRightIcon, AtSignIcon } from "@chakra-ui/icons";
+import { ArrowRightIcon, AtSignIcon, CloseIcon } from "@chakra-ui/icons";
 import {
   Button,
   Center,
+  Fade,
+  HStack,
   Input,
   InputGroup,
   InputLeftAddon,
+  useDisclosure,
   useToast,
+  VStack,
 } from "@chakra-ui/react";
 import { ChangeEvent, KeyboardEvent, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -23,6 +27,7 @@ const Body = () => {
     if (event.code === "Enter") {
       retrievePersonalityData();
     }
+    console.log(movieId);
   };
 
   const retrievePersonalityData = () => {
@@ -51,45 +56,101 @@ const Body = () => {
       });
   };
 
+  const [movieId, setMovieId] = useState<string>("");
+
+  const handleMovieInput = (event: ChangeEvent<HTMLInputElement>) =>
+    setMovieId(event.target.value);
+
+  const { isOpen, onToggle } = useDisclosure();
+
   return (
-    <Center paddingY="15rem" bg="gray.800" color="gray.300">
-      <InputGroup size="lg" w="20rem" bg="gray.800">
-        <InputLeftAddon
-          pointerEvents="none"
-          bg="gray.800"
-          borderColor="gray.700"
-          children={<AtSignIcon color="gray.200" />}
-        />
-        <Input
-          isDisabled={isRetreiving}
-          isRequired
-          fontSize="medium"
-          value={username}
-          placeholder="Twitter ID / Username"
-          variant="flushed"
-          padding="1rem"
-          borderColor="gray.700"
-          _hover={{ bg: "gray.900" }}
-          _focus={{ bg: "gray.900", borderColor: "blue.400" }}
-          onChange={handleChange}
-          onKeyPress={handleKeypress}
-        />
-      </InputGroup>
-      <Button
-        isLoading={isRetreiving}
-        colorScheme="teal"
-        variant="outline"
-        size="lg"
-        fontSize="medium"
-        marginStart="0.2rem"
-        borderRadius="0"
-        _hover={{ bg: "gray.700" }}
-        _focus={{ bg: "gray.900" }}
-        _active={{ bg: "gray.900" }}
-        onClick={retrievePersonalityData}
-      >
-        <ArrowRightIcon w={3} />
-      </Button>
+    <Center bg="gray.800" color="gray.300" minHeight="60vh">
+      <VStack spacing="1rem">
+        <HStack spacing="0">
+          <InputGroup size="lg" w="20rem" bg="gray.800">
+            <InputLeftAddon
+              pointerEvents="none"
+              bg="gray.800"
+              borderColor="gray.700"
+              children={<AtSignIcon color="gray.200" />}
+            />
+            <Input
+              isDisabled={isRetreiving}
+              isRequired
+              fontSize="medium"
+              value={username}
+              placeholder="Twitter ID / Username"
+              variant="flushed"
+              padding="1rem"
+              borderColor="gray.700"
+              _hover={{ bg: "gray.900" }}
+              _focus={{ bg: "gray.900", borderColor: "blue.400" }}
+              onChange={handleChange}
+              onKeyPress={handleKeypress}
+            />
+          </InputGroup>
+          <Button
+            isLoading={isRetreiving}
+            colorScheme="teal"
+            variant="outline"
+            size="lg"
+            fontSize="medium"
+            borderRadius="0"
+            _hover={{ bg: "gray.700" }}
+            _focus={{ bg: "gray.900" }}
+            _active={{ bg: "gray.900" }}
+            onClick={retrievePersonalityData}
+          >
+            <ArrowRightIcon w={3} />
+          </Button>
+        </HStack>
+
+        <Fade in={!isOpen} style={{ display: !isOpen ? "" : "none" }}>
+          <Button
+            variant="link"
+            fontWeight="light"
+            fontSize="sm"
+            height="2rem"
+            _active={{ color: "gray.600" }}
+            onClick={onToggle}
+          >
+            You don't know to watch a certain movie or not? give us the imdb ID!
+          </Button>
+        </Fade>
+
+        <Fade in={isOpen} style={{ display: isOpen ? "" : "none" }}>
+          <HStack spacing="0" height="2rem">
+            <InputGroup size="sm" w="12rem" bg="gray.800">
+              <Input
+                value={movieId}
+                placeholder="Movie IMDB ID"
+                variant="unstyled"
+                padding="0.5rem"
+                borderColor="gray.700"
+                _hover={{ bg: "gray.900" }}
+                _focus={{ bg: "gray.900", borderColor: "blue.400" }}
+                onChange={handleMovieInput}
+                onKeyPress={handleKeypress}
+              />
+            </InputGroup>
+            <Button
+              colorScheme="red"
+              variant="ghost"
+              size="sm"
+              borderRadius="0"
+              _hover={{ bg: "red.700" }}
+              _focus={{ bg: "red.900" }}
+              _active={{ bg: "red.900" }}
+              onClick={() => {
+                onToggle();
+                setMovieId("");
+              }}
+            >
+              <CloseIcon w={3} />
+            </Button>
+          </HStack>
+        </Fade>
+      </VStack>
     </Center>
   );
 };
