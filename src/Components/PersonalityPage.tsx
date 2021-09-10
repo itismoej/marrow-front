@@ -103,7 +103,7 @@ const PersonalityPage = () => {
         padding="4rem 2rem"
         bg="gray.800"
         color="gray.300"
-        columns={2}
+        columns={theMovieId ? 2 : 1}
         spacing={10}
       >
         {isRetreiving ? (
@@ -114,11 +114,7 @@ const PersonalityPage = () => {
             padding="1rem"
           />
         ) : (
-          <VStack
-            spacing="5rem"
-            justifyContent="center"
-            width={theMovieId ? "100%" : "100%"}
-          >
+          <VStack spacing="5rem" justifyContent="center" width="100%">
             {personality.mbti === undefined ? (
               <Text fontSize="xl">
                 This user, currently is not available in twitter.
