@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import { API } from "../constants";
 import { PersonalityContext } from "../Modules/personality";
 
 type PersonalityPageParams = {
@@ -45,7 +46,7 @@ const PersonalityPage = () => {
   useEffect(() => {
     if (personality.mbti === "") {
       fetch(
-        `http://192.168.43.72:8000/users/mbti/?format=json&id=${params.username}` +
+        `${API}/users/mbti/?format=json&id=${params.username}` +
           `${
             theMovieId !== undefined && theMovieId !== ""
               ? `&movie_id=${theMovieId}`
@@ -76,7 +77,7 @@ const PersonalityPage = () => {
 
     if (personality.mbti?.length === 4 && moviesLoading) {
       fetch(
-        `http://192.168.43.72:8000/movies/recommend/?mbti=${personality.mbti}` +
+        `${API}/movies/recommend/?mbti=${personality.mbti}` +
           `${theMovieId ? `&movie_id=${theMovieId}` : ""}`
       )
         .then((r) => r.json())

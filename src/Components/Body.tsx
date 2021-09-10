@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { ChangeEvent, KeyboardEvent, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { API } from "../constants";
 import { PersonalityContext } from "../Modules/personality";
 
 const Body = () => {
@@ -33,7 +34,7 @@ const Body = () => {
   const retrievePersonalityData = () => {
     setIsRetreiving(true);
     fetch(
-      `http://192.168.43.72:8000/users/mbti/?format=json&id=${username}` +
+      `${API}/users/mbti/?format=json&id=${username}` +
         `${movieId ? `&movie_id=${movieId}` : ""}`
     )
       .then((r) => {
